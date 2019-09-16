@@ -7,6 +7,7 @@
  ****************************************************************/
 function getBookById(bookId, books) {
   // Your code goes here
+  return books.find(book => book["id"] === bookId)
 }
 
 /**************************************************************
@@ -18,6 +19,7 @@ function getBookById(bookId, books) {
  ****************************************************************/
 function getAuthorByName(authorName, authors) {
   // Your code goes here
+  return authors.find(author => author["name"].toLowerCase() === authorName.toLowerCase())
 }
 
 /**************************************************************
@@ -28,6 +30,9 @@ function getAuthorByName(authorName, authors) {
  ****************************************************************/
 function bookCountsByAuthor(authors) {
   // Your code goes here
+  return authors.map(dict => {
+    return {author: dict["name"], bookCount: dict["books"].length}
+  });
 }
 
 /**************************************************************
@@ -39,9 +44,19 @@ function bookCountsByAuthor(authors) {
  ****************************************************************/
 function booksByColor(books) {
   const colors = {};
-
   // Your code goes here
-
+  // const unique = (value, index, self) => {
+  //   return self.indexOf(value) === index
+  // }
+  // const uniqueColors = books["color"].filter(unique)
+  // colors = 
+  books.forEach(book => {
+    if (book.color in colors){
+      colors[book.color].push(book.title)
+    } else {
+      colors[book.color] = [book.title]
+    }
+  })
   return colors;
 }
 
@@ -55,6 +70,13 @@ function booksByColor(books) {
  ****************************************************************/
 function titlesByAuthorName(authorName, authors, books) {
   // Your code goes here
+  const array = []
+  authors.forEach(author => {
+    if (author.name.toLowerCase() === authorName.toLowerCase()) {
+      array.push(...author.books)
+    }
+  })
+  return array.map(bookId => books.find(book=> bookId == book.id).title )
 }
 
 /**************************************************************
@@ -66,6 +88,8 @@ function titlesByAuthorName(authorName, authors, books) {
  ****************************************************************/
 function mostProlificAuthor(authors) {
   // Your code goes here
+  const len = Math.max(...authors.map(author => author.books.length))
+  return authors.find(author => author.books.length === len).name
 }
 
 /**************************************************************
