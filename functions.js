@@ -117,6 +117,10 @@ function mostProlificAuthor(authors) {
  ****************************************************************/
 function relatedBooks(bookId, authors, books) {
   // Your code goes here
+  const book = getBookById(bookId, books)
+  const titles = []
+  book.authors.forEach(author => titles.push(...titlesByAuthorName(author.name,authors,books)))
+  return titles
 }
 
 /**************************************************************
@@ -127,6 +131,7 @@ function relatedBooks(bookId, authors, books) {
  ****************************************************************/
 function friendliestAuthor(authors) {
   // Your code goes here
+
 }
 
 module.exports = {
